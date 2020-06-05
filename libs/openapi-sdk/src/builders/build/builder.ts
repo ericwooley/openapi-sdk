@@ -11,7 +11,6 @@ import { spawnSync } from 'child_process'
 import { join } from 'path'
 import { inspect } from 'util'
 import { getSourceRoot } from '../../utils/normalize'
-import {sync as whichSync} from 'which'
 function exec(
   command: string,
   args: string[],
@@ -51,16 +50,14 @@ export function runBuilder(
 ): Observable<BuilderOutput> {
   return from(getSourceRoot(context)).pipe(
     mergeMap(async (sourceRoot) => {
-      context.logger.error(`SourceRoot: ${sourceRoot}`)
-      context.logger.error('Error: test')
       const yamlFile = join(context.workspaceRoot, sourceRoot, 'openapi.yml')
       const outSrc = join(context.workspaceRoot, sourceRoot, 'src')
-      context.logger.error(yamlFile)
       return {
         sourceRoot,
         result: await exec(
-        whichSync(`openapi-generator`),
+        'npx',
         [
+          `openapi-generator`,
           'generate',
           '-i',
           yamlFile,
