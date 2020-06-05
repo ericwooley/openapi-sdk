@@ -1,0 +1,113 @@
+openapi: "3.0.0"
+info:
+  title: <%= projectName %>
+  description: <%= description %>
+  version: 0.0.1
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        healthy:
+          type: boolean
+      required:
+        - healthy
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Was operation successful
+    PasswordResetRequestBody:
+      type: object
+      properties:
+        email:
+          type: string
+          description: email to reset password for
+          minimum: 1
+        name:
+          type: string
+          description: name to use in email
+          minimum: 1
+        token:
+          type: string
+          description: secret reset token
+          minimum: 1
+        expiration:
+          type: number
+          description: date in ms since epoch for password reset expiration
+      required:
+        - email
+        - name
+        - token
+        - expiration
+      example:
+        email: bob@gmail.com
+        name: Bob Stevenson
+        token: asdflkh088h0n0in0pkn97g
+        expiration: 1589987483315
+    VerifyRequestBody:
+      type: object
+      properties:
+        email:
+          type: string
+          description: email to register with
+          minimum: 1
+        name:
+          type: string
+          description: name to use in email
+          minimum: 1
+        token:
+          type: string
+          description: secret response token
+          minimum: 1
+      required:
+        - email
+        - name
+        - token
+      example:
+        email: bob@gmail.com
+        name: Bob Stevenson
+        token: asdflkh088h0n0in0pkn97g
+
+paths:
+  /health:
+    get:
+      operationId: health
+      responses:
+        200:
+          description: health response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+  /email/verify:
+    post:
+      operationId: sendVerificationEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyRequestBody"
+      responses:
+        200:
+          description: Send verification email
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Success"
+  /email/passwordReset:
+    post:
+      operationId: sendPasswordResetEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasswordResetRequestBody"
+      responses:
+        200:
+          description: Send Password Reset email
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Success"

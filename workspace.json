@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "projects": {
+    "openapi-sdk": {
+      "root": "libs/openapi-sdk",
+      "sourceRoot": "libs/openapi-sdk/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/openapi-sdk/.eslintrc",
+            "tsConfig": [
+              "libs/openapi-sdk/tsconfig.lib.json",
+              "libs/openapi-sdk/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/openapi-sdk/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/openapi-sdk/jest.config.js",
+            "tsConfig": "libs/openapi-sdk/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/openapi-sdk",
+            "tsConfig": "libs/openapi-sdk/tsconfig.lib.json",
+            "packageJson": "libs/openapi-sdk/package.json",
+            "main": "libs/openapi-sdk/src/index.ts",
+            "assets": [
+              "libs/openapi-sdk/*.md",
+              {
+                "input": "./libs/openapi-sdk/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./libs/openapi-sdk",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "./libs/openapi-sdk",
+                "glob": "builders.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "openapi-sdk-e2e": {
+      "projectType": "application",
+      "root": "apps/openapi-sdk-e2e",
+      "sourceRoot": "apps/openapi-sdk-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "openapi-sdk:build",
+            "npmPackageName": "@ericwooley/openapi-sdk",
+            "pluginOutputPath": "dist/libs/openapi-sdk",
+            "jestConfig": "apps/openapi-sdk-e2e/jest.config.js",
+            "tsSpecConfig": "apps/openapi-sdk-e2e/tsconfig.spec.json"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/react": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/web": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/nx-plugin": {
+      "plugin": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      }
+    }
+  }
+}

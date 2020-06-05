@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "name": "openapi-sdk",
+  "version": "0.0.1",
+  "schematics": {
+    "openapi-sdk": {
+      "factory": "./src/schematics/openapi-sdk/schematic",
+      "schema": "./src/schematics/openapi-sdk/schema.json",
+      "description": "openapi-sdk schematic"
+    }
+  }
+}
