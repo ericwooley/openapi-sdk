@@ -5,41 +5,36 @@ import {
   createBuilder,
 } from '@angular-devkit/architect'
 import { Observable, from } from 'rxjs'
-import { mergeMap, map } from 'rxjs/operators'
+import { mergeMap } from 'rxjs/operators'
 import { BuildBuilderSchema } from './schema'
-import { spawnSync } from 'child_process'
+import { spawn } from 'child_process'
 import { join } from 'path'
-import { inspect } from 'util'
 import { getSourceRoot } from '../../utils/normalize'
 function exec(
   command: string,
   args: string[],
   logger: BuilderContext['logger'],
 ) {
-  logger.error(`Running: ${command}, with args: ${args}`)
+  logger.info(`Running: ${command}, with args: ${args}`)
   return new Promise<BuilderOutput>((resolve, reject) => {
-    const {
-      status,
-      signal,
-      output: [, stdout, stderr],
-    } = spawnSync(command, args, {
+    const child = spawn(command, args, {
       shell: true,
     })
-    logger.info(
-      inspect({
-        status,
-        signal,
-        stdout: stdout.toString(),
-        stderr: stderr.toString(),
-      }),
-    )
-    if (status !== 0) {
-      logger.error(`Error building: '${command} ${args.join(' ')}'`)
-      logger.error(`exit code: ${status}`)
-      return reject(new Error(`Program exit: ${status}:${signal}`))
-    }
-    logger.info(`Openapi sdk generated`)
-    return resolve({ success: status === 0 })
+    child.stdout.on('data', (data: string) => logger.info(`${data}`))
+    child.stderr.on('data', (data: string) => logger.warn(`${data}`))
+    child.on('close', (code, signal) => {
+      if (code !== 0) {
+        logger.error(`Error building: '${command} ${args.join(' ')}'`)
+        logger.error(`exit code: ${code}`)
+        return reject(
+          new Error(
+            `Openapi was not successful - exit code: ${code} - signal: ${signal}`,
+          ),
+        )
+      }
+      logger.info(`Openapi sdk generated`)
+      return resolve({ success: code === 0 })
+    })
   })
 }
 

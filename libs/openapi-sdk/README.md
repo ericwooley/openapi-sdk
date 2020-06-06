@@ -25,6 +25,11 @@ Edit that file according to your openapi needs.
 
 When you want to generate an sdk run `nx build my-sdk` and your typescript will be generated.
 
+## Testing
+Unit tests are hard with these kind of projects. Schema does have some useful unit tests `nx test openapi-sdk`
+
+The real testing is done by the e2e test `nx e2e openapi-sdk-e2e`
+
 ## Publishing
 
 manually patch the version in
