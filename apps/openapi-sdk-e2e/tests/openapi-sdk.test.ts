@@ -17,7 +17,7 @@ describe('openapi-sdk e2e', () => {
     expect(() =>
       checkFilesExist(`libs/${plugin}/src/index.ts`),
     ).not.toThrow()
-    expect(result.stdout).toContain('Builder ran')
+    expect(result.stdout).toContain('Openapi sdk generated')
     done()
   })
 

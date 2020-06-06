@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import {
   apply,
   applyTemplates,
@@ -6,6 +7,8 @@ import {
   move,
   Rule,
   url,
+  Tree,
+  SchematicContext,
 } from '@angular-devkit/schematics'
 import {
   addProjectToNxJsonInTree,
@@ -15,6 +18,9 @@ import {
   ProjectType,
   toFileName,
   updateWorkspace,
+  readJsonInTree,
+  NxJson,
+  updateJsonInTree,
 } from '@nrwl/workspace'
 import { OpenapiSdkSchematicSchema } from './schema'
 
@@ -24,10 +30,10 @@ import { OpenapiSdkSchematicSchema } from './schema'
 const projectType = ProjectType.Library
 
 interface NormalizedSchema extends OpenapiSdkSchematicSchema {
-  projectName: string;
-  projectRoot: string;
-  projectDirectory: string;
-  parsedTags: string[];
+  projectName: string
+  projectRoot: string
+  projectDirectory: string
+  parsedTags: string[]
 }
 
 function normalizeOptions(
@@ -68,6 +74,7 @@ function addFiles(options: NormalizedSchema): Rule {
 export default function (options: OpenapiSdkSchematicSchema): Rule {
   const normalizedOptions = normalizeOptions(options)
   return chain([
+    updateTsConfig(normalizedOptions),
     updateWorkspace((workspace) => {
       workspace.projects
         .add({
@@ -85,5 +92,22 @@ export default function (options: OpenapiSdkSchematicSchema): Rule {
       tags: normalizedOptions.parsedTags,
     }),
     addFiles(normalizedOptions),
+  ])
+}
+
+function updateTsConfig(options: NormalizedSchema): Rule {
+  return chain([
+    (host: Tree, context: SchematicContext) => {
+      const nxJson = readJsonInTree<NxJson>(host, 'nx.json')
+      return updateJsonInTree('tsconfig.json', (json) => {
+        const c = json.compilerOptions
+        c.paths = c.paths || {}
+        delete c.paths[options.name]
+        c.paths[`@${nxJson.npmScope}/${options.projectDirectory}`] = [
+          `libs/${options.projectDirectory}/src/index.ts`,
+        ]
+        return json
+      })(host, context)
+    },
   ])
 }

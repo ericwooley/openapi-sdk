@@ -38,7 +38,7 @@ function exec(
       logger.error(`exit code: ${status}`)
       return reject(new Error(`Program exit: ${status}:${signal}`))
     }
-    logger.info(`Success building`)
+    logger.info(`Openapi sdk generated`)
     return resolve({ success: status === 0 })
   })
 }
@@ -51,9 +51,7 @@ export function runBuilder(
     mergeMap(async (sourceRoot) => {
       const yamlFile = join(context.workspaceRoot, sourceRoot, 'openapi.yml')
       const outSrc = join(context.workspaceRoot, sourceRoot, 'src')
-      return {
-        sourceRoot,
-        result: await exec(
+      return await exec(
         'npx',
         [
           `openapi-generator`,
@@ -67,18 +65,7 @@ export function runBuilder(
           outSrc,
         ],
         context.logger,
-      )}
-    }),
-    mergeMap(async ({sourceRoot}) => {
-      const cwd = process.cwd()
-      process.chdir(sourceRoot)
-      const result = await exec('npx', ['tsc'], context.logger)
-      process.chdir(cwd)
-      return result
-    }),
-    map((result) =>{
-      context.logger.info('Builder ran')
-      return result
+      )
     }),
   )
 }
