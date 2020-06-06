@@ -1,6 +1,6 @@
 {
   "name": "nx-openapi-plugin",
-  "version": "0.0.5",
+  "version": "0.0.4",
   "license": "MIT",
   "scripts": {
     "nx": "nx",
@@ -40,7 +40,6 @@
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.0.0",
     "jest": "25.2.3",
-    "np": "^6.2.3",
     "prettier": "2.0.4",
     "ts-jest": "25.2.1",
     "ts-node": "~7.0.0",
