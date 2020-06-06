@@ -15,7 +15,6 @@ describe('openapi-sdk e2e', () => {
 
     const result = await runNxCommandAsync(`build ${plugin}`);
     expect(result.stdout).toContain('Builder ran');
-
     done();
   });
 
@@ -28,6 +27,9 @@ describe('openapi-sdk e2e', () => {
       );
       expect(() =>
         checkFilesExist(`libs/subdir/${plugin}/openapi.yml`)
+      ).not.toThrow();
+      expect(() =>
+        checkFilesExist(`libs/subdir/${plugin}/tsconfig.json`)
       ).not.toThrow();
       done();
     });
