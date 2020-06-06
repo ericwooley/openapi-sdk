@@ -5,7 +5,7 @@
 echo $(dirname $0)
 CURRENT_VERSION=$(cat package.json | jq .version);
 nx build openapi-sdk || exit 0;
-yarn version "$@" || exit 0;
+npm version "$@" || exit 0;
 NEW_VERSION=$(cat package.json | jq .version);
 BUILD_PACKAGE_JSON="./dist/libs/openapi-sdk/package.json"
 cat $BUILD_PACKAGE_JSON  | jq ".version = $NEW_VERSION" > "$BUILD_PACKAGE_JSON.tmp"
