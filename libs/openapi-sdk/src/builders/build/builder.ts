@@ -47,9 +47,12 @@ export function runBuilder(
   return from(getSourceRoot(context)).pipe(
     mergeMap(async (sourceRoot) => {
       const yamlFile = join(context.workspaceRoot, sourceRoot, 'openapi.yml')
+      context.logger.info(`building ${yamlFile}`)
       const bundledPath = join(context.workspaceRoot, sourceRoot, 'document')
       const bundledOutFile = join(bundledPath, 'index.ts')
+      context.logger.info(`document path: ${bundledOutFile}`)
       const outSrc = join(context.workspaceRoot, sourceRoot, 'sdk')
+      context.logger.info(`sdk path: ${outSrc}`)
       await SwaggerParser.validate(yamlFile)
       const bundled = await SwaggerParser.bundle(yamlFile)
       await fs.mkdir(bundledPath, { recursive: true })

@@ -13,8 +13,31 @@ Would create `lib/auth-sdk`. Inside `lib/auth-sdk`, is a new file openapi.yml. R
 nx build auth-sdk
 ```
 
-## Installation & Usage
+You will now have 2 new folders, `lib/auth-sdk/document` and `lib/auth-sdk/sdk` which contain generated files.
 
+### SDK
+ `sdk` contains the TS code to interact with your api.
+
+```ts
+import {DefaultApi} from '@myorg/auth-sdk`
+const authApi = new DefaultApi({
+  basePath: 'http://localhost:8080/auth',
+  baseOptions: {
+    withCredentials: true,
+  },
+})
+```
+
+`document` contains the fully, self contained openapi document in ts. You can use it for swagger ui, or whatever you like.
+```ts
+import express from 'express'
+import swaggerUi from 'swagger-ui-express'
+import authOpenapiDocument from '@myorg/auth-sdk-document`
+
+const app = express();
+app.use('/openapi', swaggerUi.serve, swaggerUi.setup(authOpenapiDocument));
+```
+## Installation & Usage
 
 **You must have java installed**
 
