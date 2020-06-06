@@ -34,12 +34,11 @@ function exec(
       }),
     )
     if (status !== 0) {
-      logger.error(`Error building: '${command}'`)
+      logger.error(`Error building: '${command} ${args.join(' ')}'`)
       logger.error(`exit code: ${status}`)
       return reject(new Error(`Program exit: ${status}:${signal}`))
     }
-    logger.info(`Success building: '${command}'`)
-    logger.error(`exit code: ${status}`)
+    logger.info(`Success building`)
     return resolve({ success: status === 0 })
   })
 }
