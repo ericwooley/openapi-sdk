@@ -104,7 +104,10 @@ function updateTsConfig(options: NormalizedSchema): Rule {
         c.paths = c.paths || {}
         delete c.paths[options.name]
         c.paths[`@${nxJson.npmScope}/${options.projectDirectory}`] = [
-          `libs/${options.projectDirectory}/src/index.ts`,
+          `libs/${options.projectDirectory}/sdk/index.ts`,
+        ]
+        c.paths[`@${nxJson.npmScope}/${options.projectDirectory}-document`] = [
+          `libs/${options.projectDirectory}/document/index.ts`,
         ]
         return json
       })(host, context)

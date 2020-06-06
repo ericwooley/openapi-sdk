@@ -15,7 +15,10 @@ describe('openapi-sdk e2e', () => {
 
     const result = await runNxCommandAsync(`build ${plugin}`)
     expect(() =>
-      checkFilesExist(`libs/${plugin}/src/index.ts`),
+      checkFilesExist(`libs/${plugin}/sdk/index.ts`),
+    ).not.toThrow()
+    expect(() =>
+      checkFilesExist(`libs/${plugin}/document/index.ts`),
     ).not.toThrow()
     expect(result.stdout).toContain('Openapi sdk generated')
     done()

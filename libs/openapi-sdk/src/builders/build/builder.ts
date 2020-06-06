@@ -10,6 +10,8 @@ import { BuildBuilderSchema } from './schema'
 import { spawn } from 'child_process'
 import { join } from 'path'
 import { getSourceRoot } from '../../utils/normalize'
+import * as SwaggerParser from '@apidevtools/swagger-parser'
+import { promises as fs } from 'fs'
 function exec(
   command: string,
   args: string[],
@@ -45,7 +47,24 @@ export function runBuilder(
   return from(getSourceRoot(context)).pipe(
     mergeMap(async (sourceRoot) => {
       const yamlFile = join(context.workspaceRoot, sourceRoot, 'openapi.yml')
-      const outSrc = join(context.workspaceRoot, sourceRoot, 'src')
+      const bundledPath = join(context.workspaceRoot, sourceRoot, 'document')
+      const bundledOutFile = join(bundledPath, 'index.ts')
+      const outSrc = join(context.workspaceRoot, sourceRoot, 'sdk')
+      await SwaggerParser.validate(yamlFile)
+      const bundled = await SwaggerParser.bundle(yamlFile)
+      await fs.mkdir(bundledPath, { recursive: true })
+      await fs.writeFile(
+        bundledOutFile,
+        `
+/* eslint-disable */
+/* THIS IS A GENERATED FILE
+ * DO NOT EDIT IT DIRECTLY
+ * edit ../openapi.yml and run
+ * \`nx build ${context.target}\` to rebuild this file.
+ */
+export default ${JSON.stringify(bundled, null, 2)}
+      `.trim(),
+      )
       return await exec(
         'npx',
         [

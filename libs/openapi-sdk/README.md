@@ -1,6 +1,17 @@
 # nx-openapi-plugin
 
-generate an sdk from an open api spec.
+Create packages that automatically generate a typescript sdk from an open api spec.
+## Example
+
+For example, if you wanted to generate an sdk for you auth service:
+```
+nx g @ericwooley/openapi-sdk:openapi-sdk auth-sdk
+```
+Would create `lib/auth-sdk`. Inside `lib/auth-sdk`, is a new file openapi.yml. Replace the contents of `openapi.yml`, with your spec. Then run:
+
+```
+nx build auth-sdk
+```
 
 ## Installation & Usage
 
@@ -33,6 +44,8 @@ The real testing is done by the e2e test `nx e2e openapi-sdk-e2e`
 ## Publishing
 use `./publish.sh patch`, which will create a new release.
 publish.sh forwards all arguments to `npm version`
+
+* dependencies and versions are copied from the root package.json
 
 ## Road Map
 If anyone ends up using this, we could add more options to pass down to the openapi generator. Currently it uses [typescript-axios](https://openapi-generator.tech/docs/generators/typescript-axios)
