@@ -2,7 +2,7 @@
 
 generate an sdk from an open api spec.
 
-## Installation
+## Installation & Usage
 
 
 **You must have java installed**
