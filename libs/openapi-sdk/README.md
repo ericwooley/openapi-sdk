@@ -31,7 +31,8 @@ Unit tests are hard with these kind of projects. Schema does have some useful un
 The real testing is done by the e2e test `nx e2e openapi-sdk-e2e`
 
 ## Publishing
-use `./publish.sh`, which will walk you through all the publishing and versioning steps
+use `./publish.sh patch`, which will create a new release.
+publish.sh forwards all arguments to `npm version`
 
 ## Road Map
 If anyone ends up using this, we could add more options to pass down to the openapi generator. Currently it uses [typescript-axios](https://openapi-generator.tech/docs/generators/typescript-axios)
