@@ -40,10 +40,10 @@ describe('openapi-sdk e2e', () => {
 
     const result = await runNxCommandAsync(`digest ${libName}`)
     expect(() =>
-      checkFilesExist(`libs/${libName}/generated/index.ts`),
+      checkFilesExist(`libs/${libName}/src/index.ts`),
     ).not.toThrow()
     expect(() =>
-      checkFilesExist(`libs/${libName}/generated/openapiDoc.ts`),
+      checkFilesExist(`libs/${libName}/src/openapiDoc.ts`),
     ).not.toThrow()
     expect(result.stdout).toContain('Openapi sdk generated')
     done()
@@ -55,10 +55,10 @@ describe('openapi-sdk e2e', () => {
 
     const result = await runNxCommandAsync(`digest ${libName}`)
     expect(() =>
-      checkFilesExist(`libs/${libName}/generated/index.ts`),
+      checkFilesExist(`libs/${libName}/src/index.ts`),
     ).not.toThrow()
     expect(() =>
-      checkFilesExist(`libs/${libName}/generated/openapiDoc.ts`),
+      checkFilesExist(`libs/${libName}/src/openapiDoc.ts`),
     ).toThrow()
     expect(result.stdout).toContain('Openapi sdk generated')
     done()

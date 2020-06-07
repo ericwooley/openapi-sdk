@@ -76,7 +76,7 @@ export default function (options: OpenapiSdkSchematicSchema): Rule {
   return chain([
     updateTsConfig(normalizedOptions),
     updateWorkspace((workspace) => {
-      const sdkFolder = `${normalizedOptions.projectRoot}/generated`
+      const sdkFolder = `${normalizedOptions.projectRoot}/src`
       const project = workspace.projects.add({
         name: normalizedOptions.projectName,
         root: normalizedOptions.projectRoot,
@@ -119,7 +119,7 @@ function updateTsConfig(options: NormalizedSchema): Rule {
         c.paths = c.paths || {}
         delete c.paths[options.name]
         c.paths[`@${nxJson.npmScope}/${options.name}`] = [
-          `${options.projectRoot}/generated/index.ts`,
+          `${options.projectRoot}/src/index.ts`,
         ]
         return json
       })(host, context)
