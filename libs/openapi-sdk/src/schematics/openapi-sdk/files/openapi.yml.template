@@ -1,7 +1,7 @@
 openapi: "3.0.0"
 info:
   title: <%= projectName %>
-  description: <%= description %>
+  description: Customize your description!
   version: 0.0.1
 components:
   schemas:

@@ -4,6 +4,15 @@
   "title": "Build builder",
   "description": "",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "sdkFolder": {
+      "type": "string",
+      "description": "path for the generated output"
+    },
+    "dist": {
+      "type": "string",
+      "description": "js - build output"
+    }
+  },
   "required": []
 }

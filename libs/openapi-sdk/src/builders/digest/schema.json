@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://json-schema.org/draft-07/schema",
+  "title": "Digest",
+  "description": "Digest openapi.yml into typescript",
+  "type": "object",
+  "properties": {
+    "openapiFile": {
+      "type": "string",
+      "description": "openapi file to digest"
+    },
+    "sdkFolder": {
+      "type": "string",
+      "description": "path for the generated output"
+    },
+    "generatorType": {
+      "type": "string",
+      "description": "generator type, only tested with typescript-axios"
+    },
+    "additionalOptions": {
+      "type": "string",
+      "description": "Additional options for the generator: https://openapi-generator.tech/docs/generators/typescript-axios"
+    }
+  },
+  "required": []
+}

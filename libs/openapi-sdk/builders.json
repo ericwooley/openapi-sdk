@@ -5,6 +5,11 @@
       "implementation": "./src/builders/build/builder",
       "schema": "./src/builders/build/schema.json",
       "description": "build builder"
+    },
+    "digest": {
+      "implementation": "./src/builders/digest/builder",
+      "schema": "./src/builders/digest/schema.json",
+      "description": "build builder"
     }
   }
 }

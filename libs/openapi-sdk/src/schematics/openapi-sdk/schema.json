@@ -18,7 +18,7 @@
       "description": "",
       "$default": {
         "$source": "argv",
-        "index": 0
+        "index": 1
       },
       "x-prompt": "Please describe your open api spec:"
     },

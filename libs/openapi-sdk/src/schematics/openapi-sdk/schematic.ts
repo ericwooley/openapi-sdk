@@ -76,17 +76,31 @@ export default function (options: OpenapiSdkSchematicSchema): Rule {
   return chain([
     updateTsConfig(normalizedOptions),
     updateWorkspace((workspace) => {
-      workspace.projects
-        .add({
-          name: normalizedOptions.projectName,
-          root: normalizedOptions.projectRoot,
-          sourceRoot: `${normalizedOptions.projectRoot}`,
-          projectType,
-        })
-        .targets.add({
-          name: 'build',
-          builder: '@ericwooley/openapi-sdk:build',
-        })
+      const sdkFolder = `${normalizedOptions.projectRoot}/generated`
+      const project = workspace.projects.add({
+        name: normalizedOptions.projectName,
+        root: normalizedOptions.projectRoot,
+        sourceRoot: `${normalizedOptions.projectRoot}`,
+        projectType,
+      })
+      project.targets.add({
+        name: 'build',
+        builder: '@ericwooley/openapi-sdk:build',
+        options: {
+          sdkFolder,
+          dist: `./dist/libs/${normalizedOptions.projectName}`,
+        },
+      })
+      project.targets.add({
+        name: 'digest',
+        builder: '@ericwooley/openapi-sdk:digest',
+        options: {
+          sdkFolder,
+          generatorType: 'typescript-axios',
+          additionalOptions: `npmName=${normalizedOptions.name},supportsES6=true,withInterfaces=true`,
+          openapiFile: `${normalizedOptions.projectRoot}/openapi.yml`,
+        },
+      })
     }),
     addProjectToNxJsonInTree(normalizedOptions.projectName, {
       tags: normalizedOptions.parsedTags,
@@ -98,17 +112,16 @@ export default function (options: OpenapiSdkSchematicSchema): Rule {
 function updateTsConfig(options: NormalizedSchema): Rule {
   return chain([
     (host: Tree, context: SchematicContext) => {
-      const nxJson = readJsonInTree<NxJson>(host, 'nx.json')
       return updateJsonInTree('tsconfig.json', (json) => {
         const c = json.compilerOptions
         c.paths = c.paths || {}
         delete c.paths[options.name]
-        c.paths[`@${nxJson.npmScope}/${options.projectDirectory}`] = [
-          `libs/${options.projectDirectory}/sdk/index.ts`,
+        c.paths[options.name] = [
+          `${options.projectRoot}/generated/src`,
         ]
-        c.paths[`@${nxJson.npmScope}/${options.projectDirectory}-document`] = [
-          `libs/${options.projectDirectory}/document/index.ts`,
-        ]
+        // c.paths[`@${nxJson.npmScope}/${options.projectDirectory}document`] = [
+        //   `libs/${options.projectDirectory}/sdk/document.ts`,
+        // ]
         return json
       })(host, context)
     },
