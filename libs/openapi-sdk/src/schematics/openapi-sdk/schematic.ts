@@ -118,7 +118,7 @@ function updateTsConfig(options: NormalizedSchema): Rule {
         const c = json.compilerOptions
         c.paths = c.paths || {}
         delete c.paths[options.name]
-        c.paths[`@${nxJson.npmScope}/${options.name}document`] = [
+        c.paths[`@${nxJson.npmScope}/${options.name}`] = [
           `${options.projectRoot}/generated/index.ts`,
         ]
         return json
