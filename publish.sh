@@ -13,4 +13,5 @@ cat $BUILD_PACKAGE_JSON  | jq ".version = $NEW_VERSION | .dependencies = $DEPEND
 rm $BUILD_PACKAGE_JSON
 mv "$BUILD_PACKAGE_JSON.tmp" $BUILD_PACKAGE_JSON
 npm publish ./dist/libs/openapi-sdk --access public "${@:2}"
+git push
 git push --tags
