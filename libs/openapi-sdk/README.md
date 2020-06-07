@@ -1,3 +1,6 @@
+# THIS IS NOT READY
+Don't try to use it yet.
+
 # nx-openapi-plugin
 
 Create packages that automatically generate a typescript sdk from an open api spec.
