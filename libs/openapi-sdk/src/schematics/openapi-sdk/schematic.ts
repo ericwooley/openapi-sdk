@@ -84,7 +84,7 @@ export default function (options: OpenapiSdkSchematicSchema): Rule {
         projectType,
       })
       project.targets.add({
-        name: 'build',
+        name: 'buildPublishable',
         builder: '@ericwooley/openapi-sdk:build',
         options: {
           sdkFolder,

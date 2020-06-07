@@ -64,13 +64,13 @@ describe('openapi-sdk e2e', () => {
     done()
   })
 
-  describe('build', () => {
+  describe('buildPublishable', () => {
     it('should build the package', async (done) => {
       const libName = 'openapi-sdk-test-lib'
       ensureNxProject('@ericwooley/openapi-sdk', 'dist/libs/openapi-sdk')
       await generate(libName)
       await runNxCommandAsync(`digest ${libName}`)
-      await runNxCommandAsync(`build ${libName}`)
+      await runNxCommandAsync(`buildPublishable ${libName}`)
       expect(() =>
         checkFilesExist(`dist/libs/${libName}/dist/index.js`),
       ).not.toThrow()
