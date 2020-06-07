@@ -1,6 +1,3 @@
-# THIS IS NOT READY
-Don't try to use it yet.
-
 # nx-openapi-plugin
 
 Create packages that automatically generate a typescript sdk from an open api spec.
@@ -13,16 +10,16 @@ nx g @ericwooley/openapi-sdk:openapi-sdk auth-sdk
 Would create `lib/auth-sdk`. Inside `lib/auth-sdk`, is a new file openapi.yml. Replace the contents of `openapi.yml`, with your spec. Then run:
 
 ```
-nx build auth-sdk
+nx digest auth-sdk
 ```
+You will now have a src folder inside `lib/auth-sdk`, it is generated code, but it's recommended that you commit it.
 
-You will now have 2 new folders, `lib/auth-sdk/document` and `lib/auth-sdk/sdk` which contain generated files.
 
-### SDK
+### Using the SDK
  `sdk` contains the TS code to interact with your api.
 
 ```ts
-import {DefaultApi} from '@myorg/auth-sdk`
+import { DefaultApi } from '@myorg/auth-sdk`
 const authApi = new DefaultApi({
   basePath: 'http://localhost:8080/auth',
   baseOptions: {
@@ -31,15 +28,21 @@ const authApi = new DefaultApi({
 })
 ```
 
-`document` contains the fully, self contained openapi document in ts. You can use it for swagger ui, or whatever you like.
+If you want to use the doc with some swagger tools:
 ```ts
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
-import authOpenapiDocument from '@myorg/auth-sdk-document`
+import { openapiDoc } from '@myorg/auth-sdk`
 
 const app = express();
 app.use('/openapi', swaggerUi.serve, swaggerUi.setup(authOpenapiDocument));
 ```
+#### Some useful libraries for working with swagger
+* [swagger-express-validator](https://www.npmjs.com/package/swagger-express-validator)
+* [swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express)
+* [swagger-node](https://github.com/swagger-api/swagger-node)
+* [swagger-view for vs code](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
+
 ## Installation & Usage
 
 **You must have java installed**
@@ -60,16 +63,19 @@ In `lib/my-sdk`, you will see a file: `openapi.yml`
 
 Edit that file according to your openapi needs.
 
-When you want to generate an sdk run `nx build my-sdk` and your typescript will be generated.
+When you want to generate an sdk run `nx digest my-sdk` and your typescript will be generated.
 
+# Development
 ## Testing
 Unit tests are hard with these kind of projects. Schema does have some useful unit tests `nx test openapi-sdk`
 
 The real testing is done by the e2e test `nx e2e openapi-sdk-e2e`
 
 ## Publishing
-use `./publish.sh patch`, which will create a new release.
+use `./publish.sh patch`, which will create a new release and publish it with the `next` tag.
 publish.sh forwards all arguments to `npm version`
+
+`./release.sh` will take the current version and make it the latest.
 
 * dependencies and versions are copied from the root package.json
 
