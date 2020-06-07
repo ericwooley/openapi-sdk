@@ -99,6 +99,7 @@ export default function (options: OpenapiSdkSchematicSchema): Rule {
           generatorType: 'typescript-axios',
           additionalOptions: `npmName=${normalizedOptions.name},supportsES6=true,withInterfaces=true`,
           openapiFile: `${normalizedOptions.projectRoot}/openapi.yml`,
+          exportBuiltDoc: options.exportBuiltDoc,
         },
       })
     }),
@@ -112,16 +113,14 @@ export default function (options: OpenapiSdkSchematicSchema): Rule {
 function updateTsConfig(options: NormalizedSchema): Rule {
   return chain([
     (host: Tree, context: SchematicContext) => {
+      const nxJson = readJsonInTree<NxJson>(host, 'nx.json')
       return updateJsonInTree('tsconfig.json', (json) => {
         const c = json.compilerOptions
         c.paths = c.paths || {}
         delete c.paths[options.name]
-        c.paths[options.name] = [
-          `${options.projectRoot}/generated/src`,
+        c.paths[`@${nxJson.npmScope}/${options.name}document`] = [
+          `${options.projectRoot}/generated/index.ts`,
         ]
-        // c.paths[`@${nxJson.npmScope}/${options.projectDirectory}document`] = [
-        //   `libs/${options.projectDirectory}/sdk/document.ts`,
-        // ]
         return json
       })(host, context)
     },

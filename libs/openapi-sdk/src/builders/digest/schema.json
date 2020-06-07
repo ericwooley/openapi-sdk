@@ -20,6 +20,10 @@
     "additionalOptions": {
       "type": "string",
       "description": "Additional options for the generator: https://openapi-generator.tech/docs/generators/typescript-axios"
+    },
+    "exportBuiltDoc": {
+      "type": "boolean",
+      "description": "include the build document in the source."
     }
   },
   "required": []

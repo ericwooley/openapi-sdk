@@ -6,4 +6,5 @@ export interface BuildBuilderSchema extends JsonObject {
   generatorType: string
   additionalOptions: string
   sdkFolder: string
+  exportBuiltDoc: boolean
 }

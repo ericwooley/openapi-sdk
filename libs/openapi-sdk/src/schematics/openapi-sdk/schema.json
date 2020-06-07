@@ -15,12 +15,13 @@
     },
     "description": {
       "type": "string",
-      "description": "",
-      "$default": {
-        "$source": "argv",
-        "index": 1
-      },
+      "description": "description of your api doc",
       "x-prompt": "Please describe your open api spec:"
+    },
+    "exportBuiltDoc": {
+      "type": "boolean",
+      "description": "weather or not digest should include the built api doc",
+      "x-prompt": "Include built api doc? (useful for various swagger tools, adds to build size)"
     },
     "tags": {
       "type": "string",
