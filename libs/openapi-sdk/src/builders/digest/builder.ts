@@ -24,7 +24,8 @@ async function digestOpenapiFile(
   const genResult = await exec(
     'npx',
     [
-      `@openapitools/openapi-generator-cli@cli-4.3.1`,
+      // the versioning tags on this are weird, make sure this matches from package.json
+      `@openapitools/openapi-generator-cli@cli-5.0.0-beta2`,
       'generate',
       '-i',
       openapiFile,

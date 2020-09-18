@@ -6,7 +6,7 @@ export function exec(
   args: string[],
   logger: BuilderContext['logger'],
 ) {
-  logger.info(`Running: ${command}, with args: ${args}`)
+  logger.info(`Running: ${command}, with args: '${args.join(' ')}'`)
   return new Promise<BuilderOutput>((resolve, reject) => {
     const child = spawn(command, args, {
       shell: true,
