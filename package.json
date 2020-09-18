@@ -27,27 +27,27 @@
   },
   "private": true,
   "dependencies": {
-    "@openapitools/openapi-generator-cli": "^1.0.13-4.3.1",
+    "@openapitools/openapi-generator-cli": "^4.3.1",
     "swagger-parser": "^9.0.1",
     "axios": "^0.19.2"
   },
   "devDependencies": {
-    "@nrwl/eslint-plugin-nx": "9.3.0",
-    "@nrwl/jest": "9.3.0",
-    "@nrwl/nx-plugin": "9.3.0",
-    "@nrwl/workspace": "9.3.0",
-    "@types/jest": "25.1.4",
+    "@nrwl/eslint-plugin-nx": "10.2.1",
+    "@nrwl/jest": "10.2.1",
+    "@nrwl/nx-plugin": "10.2.1",
+    "@nrwl/workspace": "10.2.1",
+    "@types/jest": "26.0.8",
     "@types/node": "14.0.11",
     "@typescript-eslint/eslint-plugin": "2.19.2",
     "@typescript-eslint/parser": "2.19.2",
     "dotenv": "6.2.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.0.0",
-    "jest": "25.2.3",
+    "jest": "26.2.2",
     "prettier": "2.0.4",
-    "ts-jest": "25.2.1",
+    "ts-jest": "26.1.4",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "typescript": "^3.8.3"
+    "typescript": "3.9.7"
   }
 }

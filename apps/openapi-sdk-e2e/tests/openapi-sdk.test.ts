@@ -16,7 +16,7 @@ async function generate(
     extraArgs?: string
   } = {},
 ) {
-  await runNxCommandAsync(
+  return await runNxCommandAsync(
     `generate @ericwooley/openapi-sdk:openapi-sdk --description="${description}" --exportBuiltDoc=${exportBuiltDoc} ${libName} ${extraArgs}`.trim(),
   )
 }
@@ -26,7 +26,10 @@ describe('openapi-sdk e2e', () => {
     it('should create src in the specified directory', async (done) => {
       const libName = 'openapi-sdk'
       ensureNxProject('@ericwooley/openapi-sdk', 'dist/libs/openapi-sdk')
-      await generate(libName, { extraArgs: '--directory subdir' })
+      console.log('generating...')
+      await generate(libName, {
+        extraArgs: '--directory subdir',
+      })
       expect(() =>
         checkFilesExist(`libs/subdir/${libName}/openapi.yml`),
       ).not.toThrow()
@@ -39,9 +42,7 @@ describe('openapi-sdk e2e', () => {
     await generate(libName)
 
     const result = await runNxCommandAsync(`digest ${libName}`)
-    expect(() =>
-      checkFilesExist(`libs/${libName}/src/index.ts`),
-    ).not.toThrow()
+    expect(() => checkFilesExist(`libs/${libName}/src/index.ts`)).not.toThrow()
     expect(() =>
       checkFilesExist(`libs/${libName}/src/openapiDoc.ts`),
     ).not.toThrow()
@@ -54,12 +55,8 @@ describe('openapi-sdk e2e', () => {
     await generate(libName, { exportBuiltDoc: false })
 
     const result = await runNxCommandAsync(`digest ${libName}`)
-    expect(() =>
-      checkFilesExist(`libs/${libName}/src/index.ts`),
-    ).not.toThrow()
-    expect(() =>
-      checkFilesExist(`libs/${libName}/src/openapiDoc.ts`),
-    ).toThrow()
+    expect(() => checkFilesExist(`libs/${libName}/src/index.ts`)).not.toThrow()
+    expect(() => checkFilesExist(`libs/${libName}/src/openapiDoc.ts`)).toThrow()
     expect(result.stdout).toContain('Openapi sdk generated')
     done()
   })

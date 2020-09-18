@@ -24,7 +24,7 @@ async function digestOpenapiFile(
   const genResult = await exec(
     'npx',
     [
-      `openapi-generator`,
+      `@openapitools/openapi-generator-cli@cli-4.3.1`,
       'generate',
       '-i',
       openapiFile,

@@ -7,7 +7,11 @@ import { OpenapiSdkSchematicSchema } from './schema'
 
 describe('openapi-sdk schematic', () => {
   let appTree: Tree
-  const options: OpenapiSdkSchematicSchema = { name: 'test', description: 'a test description' }
+  const options: OpenapiSdkSchematicSchema = {
+    name: 'test',
+    description: 'a test description',
+    exportBuiltDoc: false,
+  }
 
   const testRunner = new SchematicTestRunner(
     '@ericwooley/openapi-sdk',
