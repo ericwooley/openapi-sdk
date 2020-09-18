@@ -88,3 +88,7 @@ If anyone ends up using this, we could add more options to pass down to the open
 This project was generated using [Nx](https://nx.dev).
 
 <p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" width="450"></p>
+
+
+## Versions
+the major versions will match the major versions of nx starting with 10. To use with nx v9, use the 0.x.x releases
