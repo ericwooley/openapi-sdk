@@ -28,8 +28,8 @@
   "private": true,
   "dependencies": {
     "@openapitools/openapi-generator-cli": "1.0.18-5.0.0-beta2",
-    "axios": "^0.19.2",
-    "swagger-parser": "^9.0.1",
+    "axios": "^0.20.0",
+    "swagger-parser": "^10.0.2",
     "url": "^0.11.0"
   },
   "devDependencies": {
@@ -41,13 +41,13 @@
     "@types/node": "14.0.11",
     "@typescript-eslint/eslint-plugin": "2.19.2",
     "@typescript-eslint/parser": "2.19.2",
-    "dotenv": "6.2.0",
+    "dotenv": "8.2.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.0.0",
     "jest": "26.2.2",
-    "prettier": "2.0.4",
+    "prettier": "2.1.2",
     "ts-jest": "26.1.4",
-    "ts-node": "~7.0.0",
+    "ts-node": "~9.0.0",
     "tslint": "~6.0.0",
     "typescript": "3.9.7"
   }
