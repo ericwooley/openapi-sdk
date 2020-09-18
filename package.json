@@ -27,9 +27,10 @@
   },
   "private": true,
   "dependencies": {
-    "@openapitools/openapi-generator-cli": "^4.3.1",
+    "@openapitools/openapi-generator-cli": "^1.0.13-4.3.1",
+    "axios": "^0.19.2",
     "swagger-parser": "^9.0.1",
-    "axios": "^0.19.2"
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "10.2.1",
