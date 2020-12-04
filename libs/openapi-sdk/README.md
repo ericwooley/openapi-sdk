@@ -1,3 +1,11 @@
+```
+yarn add --dev @ericwooley/openapi-sdk
+```
+or
+```
+npm i @ericwooley/nx-openapi-plugin
+```
+
 # nx-openapi-plugin
 
 Create packages that automatically generate a typescript sdk from an open api spec.
