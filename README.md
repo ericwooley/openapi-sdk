@@ -1,9 +1,10 @@
+[View on NPM](https://www.npmjs.com/package/@ericwooley/openapi-sdk)
 ```
 yarn add --dev @ericwooley/openapi-sdk
 ```
 or
 ```
-npm i @ericwooley/nx-openapi-plugin
+npm i --dev @ericwooley/openapi-sdk
 ```
 
 # nx-openapi-plugin
